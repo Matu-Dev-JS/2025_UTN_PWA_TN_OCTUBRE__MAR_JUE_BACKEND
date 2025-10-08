@@ -20,8 +20,25 @@ app.use(cors())
 app.use(express.json())
 
 
+
+app.get('/api/status', (request, response) => {
+    response.send({
+        ok: true,
+        message: 'Esto esta funcionando'
+    })
+})
+
+app.get('/api/ping', (request, response) => {
+    response.send({
+        ok: true,
+        message: 'pong'
+    })
+})
+
+
 app.use('/api/workspace', workspace_router)
 app.use('/api/auth', auth_router)
+
 
 
 
