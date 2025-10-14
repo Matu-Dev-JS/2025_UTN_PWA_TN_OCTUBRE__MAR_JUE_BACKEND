@@ -58,3 +58,12 @@ app.listen(
     }
 )
 
+
+/* UserRepository.createUser('Test', 'test2@gmail.com', 'pepe123')
+.then(
+    (result) => {
+        console.log(result)
+    }
+)
+ */
+//UserRepository.getById(1)

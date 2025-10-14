@@ -1,7 +1,34 @@
+import pool from "../config/mysql.config.js";
 import Users from "../models/User.model.js";
 
+/* 
+Repository tiene la responsabilidad de interactuar con la DB 
+Capa de abstraccion
+No queremos que nuestro servidor este UNIDO en logica a nuestra DB, porque la DB puede cambiar
+*/
 
 class UserRepository {
+
+    //Version MYSQL
+    static async createUser(name, email, password){
+
+        //Porque usamos '?' en la query?
+        //que es una inyeccion SQL?
+        //Es cuando me insertan dentro de una consulta codigo SQL
+        const query = `
+            INSERT INTO Users(email, name, password) VALUES(?, ?, ?)
+        `
+
+        const [result, field_packet] = await pool.execute(query, [email, name, password])
+
+        const user_created = await UserRepository.getById(result.insertId)
+        
+        return user_created
+        //Debo retornar el usuario
+    }
+
+    /* 
+    Version MONGODB 
     static async createUser(name, email, password){
         //Logica de interaccion con la DB para crear el usuario
         const result =  await Users.insertOne({
@@ -10,7 +37,7 @@ class UserRepository {
             password: password,
         })
         return result
-    }
+    } */
 
     static async getAll (){
         //.find es un metodo para hacer filtro en una coleccion
@@ -19,9 +46,21 @@ class UserRepository {
     }
 
     static async getById (user_id){
-        const user_found = await Users.findById(user_id)
+        const query = `
+            SELECT * FROM Users WHERE _ID = ?
+        `
+        const [result] = await pool.execute(query, [user_id])
+        const user_found = result[0]
+        if(!user_found){
+            return null
+        }
         return user_found
     }
+
+    /* static async getById (user_id){
+        const user_found = await Users.findById(user_id)
+        return user_found
+    } */
     
     static async deleteById (user_id){
         await Users.findByIdAndDelete(user_id)
