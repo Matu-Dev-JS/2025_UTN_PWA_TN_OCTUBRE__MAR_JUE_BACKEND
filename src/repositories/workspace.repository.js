@@ -1,7 +1,8 @@
 import Workspaces from "../models/Workspace.model.js"
 
 class WorkspacesRepository {
-    static async createWorkspace(
+
+    /* static async createWorkspace(
         name, 
         url_image
     ){
@@ -11,7 +12,7 @@ class WorkspacesRepository {
         })
         return true
         
-    }
+    } */ 
     static async getAll (){
         const workspaces_get = await Workspaces.find()
 
