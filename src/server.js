@@ -66,4 +66,5 @@ app.listen(
     }
 )
  */
-//UserRepository.getById(1)
+//UserRepository.getByEmail('mati.dev.gimenez@gmail.com').then(result => console.log(result))
+//UserRepository.deleteById(4).then(console.log)
