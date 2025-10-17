@@ -68,3 +68,5 @@ app.listen(
  */
 //UserRepository.getByEmail('mati.dev.gimenez@gmail.com').then(result => console.log(result))
 //UserRepository.deleteById(4).then(console.log)
+
+MemberWorkspaceRepository.getAllWorkspacesByUserId(1).then(result => console.log(result))

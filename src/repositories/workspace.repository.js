@@ -1,7 +1,7 @@
 import pool from "../config/mysql.config.js"
 import Workspaces from "../models/Workspace.model.js"
 
-const WORKSPACE_TABLE = {
+export const WORKSPACE_TABLE = {
     NAME: 'Workspaces',
     COLUMNS: {
         ID: '_id',
