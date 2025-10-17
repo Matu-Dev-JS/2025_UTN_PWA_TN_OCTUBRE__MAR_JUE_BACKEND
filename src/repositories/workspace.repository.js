@@ -15,6 +15,15 @@ export const WORKSPACE_TABLE = {
 
 class WorkspacesRepository {
 
+
+    static async createWorkspace(name, url_image) {
+
+        const query = `INSERT INTO ${WORKSPACE_TABLE.NAME} (${WORKSPACE_TABLE.COLUMNS.NAME},${WORKSPACE_TABLE.COLUMNS.URL_IMAGE}) VALUES (?,?)`
+        const  [ result ] = await pool.execute(query, [name, url_image])
+
+        return result.insertId
+    }
+
     /* static async createWorkspace(
         name, 
         url_image
