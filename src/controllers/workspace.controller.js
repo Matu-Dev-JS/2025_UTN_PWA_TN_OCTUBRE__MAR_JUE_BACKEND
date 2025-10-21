@@ -1,6 +1,6 @@
 //Las funciones que se encargaran de manejar la consulta y la respuesta
 
-import MemberWorkspaceRepository from "../repositories/memeberWorkspace.repository.js"
+import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
 import WorkspacesRepository from "../repositories/workspace.repository.js"
 import { ServerError } from "../utils/customError.utils.js"
 import { validarId } from "../utils/validations.utils.js"
@@ -167,7 +167,9 @@ class WorkspaceController {
 
     }
 
-    
+    static async inviteMember(request, response){
+
+    }
 
    
 }

@@ -7,8 +7,10 @@ mongodb://localhost:27017/UTN_TN_SEPTIEMBRE_SLACK
 async function connectMongoDB() {
     try{
         await mongoose.connect(ENVIRONMENT.MONGO_DB_CONNECTION_STRING, {
-       /*      useNewUrlParser: true, 
-            useUnifiedTopology: true,  */
+            /*      
+            useNewUrlParser: true, 
+            useUnifiedTopology: true,  
+            */
             timeoutMS: 60000,
             socketTimeoutMS: 60000
         })

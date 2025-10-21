@@ -13,10 +13,15 @@ const workspace_router = express.Router()
 workspace_router.use(authMiddleware)
 
 
-workspace_router.get('/', /* authByRoleMiddleware(['admin', 'user']), */  WorkspaceController.getAll )
+workspace_router.get('/',   WorkspaceController.getAll )
 
 
 workspace_router.get('/:workspace_id', /* authByRoleMiddleware(['admin']), */  WorkspaceController.getById )
+
+workspace_router.delete(
+    '/:workspace_id', 
+    workspaceMiddleware(['admin'])
+)
 
 //Crear el WorkspaceController con los metodos .post, .getById, getAll
 
