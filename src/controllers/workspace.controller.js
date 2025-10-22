@@ -171,7 +171,7 @@ class WorkspaceController {
 
     static async inviteMember(request, response) {
         try {
-            const { member, workspace } = request
+            const { member, workspace, user } = request
             const { invited_email } = request.body
 
             //Buscar al usuario y validar que exista y este activo
@@ -212,9 +212,46 @@ class WorkspaceController {
             //Enviar mail de invitacion al usuario invitado
 
 
+            await transporter.sendMail(
+                {
+                    from: ENVIRONMENT.GMAIL_USERNAME,
+                    to: invited_email,
+                    subject: 'Invitacion al workspace',
+                    html: `<h1>El usuario: ${user.email} te ha enviado una invitación
+                            al workspace ${workspace.nombre}<h1/>
+                <a href='${ENVIRONMENT.URL_API_BACKEND}/api/members/confirm-invitation/${invite_token}'>Click para aceptar<a/>`
+                }
+            )
+
+            response.status(200).json({
+                ok: true,
+                status: 200,
+                message:'Usuario invitado con exito',
+                data: null
+            })
+
         }
         catch (error) {
-
+            console.log(error)
+            //Evaluamos si es un error que nosotros definimos
+            if (error.status) {
+                return response.status(error.status).json(
+                    {
+                        ok: false,
+                        status: error.status,
+                        message: error.message
+                    }
+                )
+            }
+            else {
+                return response.status(500).json(
+                    {
+                        ok: false,
+                        status: 500,
+                        message: 'Error interno del servidor'
+                    }
+                )
+            }
         }
     }
 
