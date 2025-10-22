@@ -1,12 +1,14 @@
 //Las funciones que se encargaran de manejar la consulta y la respuesta
 
+import ENVIRONMENT from "../config/environment.config.js"
 import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
+import UserRepository from "../repositories/user.repository.js"
 import WorkspacesRepository from "../repositories/workspace.repository.js"
 import { ServerError } from "../utils/customError.utils.js"
 import { validarId } from "../utils/validations.utils.js"
 
 class WorkspaceController {
-     static async getAll(request, response) {
+    static async getAll(request, response) {
         try {
             const workspaces = await MemberWorkspaceRepository.getAllWorkspacesByUserId(request.user.id)
             response.json(
@@ -127,13 +129,13 @@ class WorkspaceController {
             else {
                 //Creamos el workspace con el repository
                 const workspace_id_created = await WorkspacesRepository.createWorkspace(name, url_img)
-                if(!workspace_id_created){
+                if (!workspace_id_created) {
                     throw new ServerError(
                         500,
                         'Error al crear el workspace'
                     )
                 }
-                await MemberWorkspaceRepository.create( request.user.id, workspace_id_created, 'admin' )
+                await MemberWorkspaceRepository.create(request.user.id, workspace_id_created, 'admin')
                 //Si todo salio bien respondemos con {ok: true, message: 'Workspace creado con exito'}
                 return response.status(201).json({
                     ok: true,
@@ -167,11 +169,56 @@ class WorkspaceController {
 
     }
 
-    static async inviteMember(request, response){
+    static async inviteMember(request, response) {
+        try {
+            const { member, workspace } = request
+            const { invited_email } = request.body
 
+            //Buscar al usuario y validar que exista y este activo
+            const user_invited = await UserRepository.getByEmail(invited_email)
+
+            if (!user_invited) {
+                throw new ServerError(404, 'Usuario no encontrado')
+            }
+            //Verificar que NO es miembro actual de ese workspace 
+            const member_data = await MemberWorkspaceRepository.getMemberWorkspaceByUserIdAndWorkspaceId(
+                user_invited._id, workspace._id
+            )
+
+            if (member_data) {
+                throw new ServerError(409, `Usuario con email ${invited_email} ya es miembro del workspace`)
+            }
+
+            /* Crear un token con {
+                id_invitado,
+                id_workspace,
+                id_invitador
+            } CON JWT
+            */
+            const id_inviter = member.id
+            const invite_token = jwt.sign(
+                {
+                    id_invited: invited_user.id,
+                    email_invited: invited_email,
+                    id_workspace: workspace.id,
+                    id_inviter: id_inviter
+                },
+                ENVIRONMENT.JWT_SECRET_KEY,
+                {
+                    expiresIn: '7d'
+                }
+            )
+
+            //Enviar mail de invitacion al usuario invitado
+
+
+        }
+        catch (error) {
+
+        }
     }
 
-   
+
 }
 
 export default WorkspaceController

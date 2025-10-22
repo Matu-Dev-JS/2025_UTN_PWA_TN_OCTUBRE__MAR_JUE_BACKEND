@@ -72,7 +72,7 @@ class UserRepository {
 
     static async getByEmail(email) {
         const query = `
-            SELECT * FROM Users WHERE email = ?
+            SELECT * FROM Users WHERE email = ? AND active = 1 
         `;
         const [result] = await pool.execute(query, [email]);
         const user_found = result[0];
