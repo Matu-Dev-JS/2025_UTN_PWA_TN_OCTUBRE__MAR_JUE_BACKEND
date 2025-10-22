@@ -5,9 +5,9 @@ Este middleware debera
 - Validacion por role
 */
 
-import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository"
-import WorkspacesRepository from "../repositories/workspace.repository"
-import { ServerError } from "../utils/customError.utils"
+import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
+import WorkspacesRepository from "../repositories/workspace.repository.js"
+import { ServerError } from "../utils/customError.utils.js"
 
 function workspaceMiddleware(valid_member_roles = []) {
     return async function (request, response, next) {
@@ -32,11 +32,12 @@ function workspaceMiddleware(valid_member_roles = []) {
                 throw new ServerError(403, 'No tienes permiso para realizar esta operacion')
             }
 
+            console.log(valid_member_roles, member_user_data.role, valid_member_roles.includes(member_user_data.role))
             //Checkear que cuente con el rol necesario
             if (
-                valid_member_roles.length > 0 
+                valid_member_roles.length > 0 //Si hay roles para validar
                 &&
-                !valid_member_roles.includes(member_user_data.role)
+                !valid_member_roles.includes(member_user_data.role) //Los checkeamos
             ) {
                 throw new ServerError(403, "No tenés permisos suficientes")
             }
@@ -46,6 +47,7 @@ function workspaceMiddleware(valid_member_roles = []) {
 
         }
         catch (error) {
+            console.log(error)
             if (error.status) {
                 return response.status(error.status).json(
                     {

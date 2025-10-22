@@ -1,11 +1,13 @@
 //Las funciones que se encargaran de manejar la consulta y la respuesta
 
 import ENVIRONMENT from "../config/environment.config.js"
+import transporter from "../config/mailer.config.js"
 import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
 import UserRepository from "../repositories/user.repository.js"
 import WorkspacesRepository from "../repositories/workspace.repository.js"
 import { ServerError } from "../utils/customError.utils.js"
 import { validarId } from "../utils/validations.utils.js"
+import jwt from 'jsonwebtoken'
 
 class WorkspaceController {
     static async getAll(request, response) {
@@ -198,7 +200,7 @@ class WorkspaceController {
             const id_inviter = member.id
             const invite_token = jwt.sign(
                 {
-                    id_invited: invited_user.id,
+                    id_invited: user_invited.id,
                     email_invited: invited_email,
                     id_workspace: workspace.id,
                     id_inviter: id_inviter
