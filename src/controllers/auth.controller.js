@@ -1,3 +1,4 @@
+import ENVIRONMENT from "../config/environment.config.js"
 import AuthService from "../services/auth.service.js"
 import { ServerError } from "../utils/customError.utils.js"
 
@@ -108,11 +109,7 @@ class AuthController {
             const {verification_token} = request.params
             await AuthService.verifyEmail(verification_token)
 
-            return response.json({
-                ok: true, 
-                status: 200,
-                message: 'Usuario validado'
-            })
+            return response.redirect(ENVIRONMENT.URL_FRONTEND + '/login')
         } 
         catch (error) {
             console.log(error)

@@ -11,6 +11,7 @@ import UserRepository from "./repositories/user.repository.js";
 import cors from 'cors'
 import authMiddleware from "./middleware/auth.middleware.js";
 import MemberWorkspaceRepository from "./repositories/memberWorkspace.repository.js";
+import member_router from "./routes/member.router.js";
 
 
 
@@ -38,7 +39,7 @@ app.get('/api/ping', (request, response) => {
 
 app.use('/api/workspace', workspace_router)
 app.use('/api/auth', auth_router)
-
+app.use('/api/members', member_router)
 
 
 
