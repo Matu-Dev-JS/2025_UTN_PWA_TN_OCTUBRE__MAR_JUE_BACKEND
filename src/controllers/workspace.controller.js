@@ -171,14 +171,16 @@ class WorkspaceController {
 
     }
 
+
     static async inviteMember(request, response) {
         try {
+            
             const { member, workspace, user } = request
             const { invited_email } = request.body
-
+            
             //Buscar al usuario y validar que exista y este activo
             const user_invited = await UserRepository.getByEmail(invited_email)
-
+            console.log({ user_invited })
             if (!user_invited) {
                 throw new ServerError(404, 'Usuario no encontrado')
             }

@@ -17,17 +17,19 @@ function workspaceMiddleware(valid_member_roles = []) {
             //Reobtengo los datos de sesion (id, email del usuario consultante)
             const user = request.user
             const { workspace_id } = request.params
+       
 
 
             //Checkear que el workspace exista
             const workspace_selected = await WorkspacesRepository.getById(workspace_id)
+
             if (!workspace_selected) {
                 throw new ServerError(404, 'Workspace no encontrado')
             }
 
             //Checkear que el usuario sea MIEMBRO de workspace
             const member_user_data = await MemberWorkspaceRepository.getMemberWorkspaceByUserIdAndWorkspaceId(user.id, workspace_id)
-
+  
             if (!member_user_data) {
                 throw new ServerError(403, 'No tienes permiso para realizar esta operacion')
             }
