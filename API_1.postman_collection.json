@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "3f6717e3-2202-445a-b242-3a6adca9a5f0",
+		"name": "API_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22101868",
+		"_collection_link": "https://bold-comet-119014.postman.co/workspace/UTN_PWA_TN_MAR_JUE_SEP~e41e878b-7f74-4db2-a8f4-9aeafca6c3f9/collection/22101868-3f6717e3-2202-445a-b242-3a6adca9a5f0?action=share&source=collection_link&creator=22101868"
+	},
+	"item": [
+		{
+			"name": "/api/workspace",
+			"item": [
+				{
+					"name": "Obtener workspace por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/workspaces/:workspace_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"workspaces",
+								":workspace_id"
+							],
+							"variable": [
+								{
+									"key": "workspace_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener workspaces",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Crear workspace",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test con postman\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_API_SLACK}}/api/workspace/",
+							"host": [
+								"{{URL_API_SLACK}}"
+							],
+							"path": [
+								"api",
+								"workspace",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invite member",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/route_name",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/api/auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Mati\",\r\n    \"email\": \"mati.dev.gimenez@gmail.com\",\r\n    \"password\": \"Mati_123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_API_SLACK}}/api/auth/register",
+							"host": [
+								"{{URL_API_SLACK}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mati.dev.gimenez@gmail.com\",\r\n    \"password\": \"Mati_123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_API_SLACK}}/api/auth/login",
+							"host": [
+								"{{URL_API_SLACK}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "ruta protegida",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

@@ -5,6 +5,7 @@ import { ServerError } from '../utils/customError.utils.js'
 import WorkspaceController from '../controllers/workspace.controller.js'
 import authMiddleware, { authByRoleMiddleware } from '../middleware/auth.middleware.js'
 import workspaceMiddleware from '../middleware/workspace.middleware.js'
+import ChannelController from '../controllers/channel.controller.js'
 
 //Manejar consultas referidas a workspace
 
@@ -23,6 +24,12 @@ workspace_router.post(
     '/:workspace_id/invite', 
     workspaceMiddleware(['admin']),
     WorkspaceController.inviteMember
+)
+
+workspace_router.post(
+    '/:workspace_id/channels/:channel_id',
+    workspaceMiddleware([]),//Cualquier miembro puede hacer esta consulta
+    ChannelController.create
 )
 
 //Crear el WorkspaceController con los metodos .post, .getById, getAll
