@@ -20,6 +20,14 @@ class ChannelRepository {
         return result;
     }
 
+    static async getAllByWorkspaceAndName(workspace_id, name) {
+        const query = `
+      SELECT * FROM Channels WHERE workspace = ? AND name = ?
+    `;
+        const [result] = await pool.execute(query, [workspace_id, name]);
+        return result;
+    }
+
     static async getById(channel_id) {
         const query = `
       SELECT * FROM Channels WHERE _id = ?

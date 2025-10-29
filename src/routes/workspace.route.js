@@ -27,7 +27,7 @@ workspace_router.post(
 )
 
 workspace_router.post(
-    '/:workspace_id/channels/:channel_id',
+    '/:workspace_id/channels/',
     workspaceMiddleware([]),//Cualquier miembro puede hacer esta consulta
     ChannelController.create
 )
