@@ -31,6 +31,11 @@ workspace_router.post(
     workspaceMiddleware([]),//Cualquier miembro puede hacer esta consulta
     ChannelController.create
 )
+workspace_router.get(
+    '/:workspace_id/channels/',
+    workspaceMiddleware([]),//Cualquier miembro puede hacer esta consulta
+    ChannelController.getAllByWorkspace
+)
 
 //Crear el WorkspaceController con los metodos .post, .getById, getAll
 

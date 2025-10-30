@@ -2,6 +2,7 @@
 
 import ENVIRONMENT from "../config/environment.config.js"
 import transporter from "../config/mailer.config.js"
+import ChannelRepository from "../repositories/channel.repository.js"
 import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
 import UserRepository from "../repositories/user.repository.js"
 import WorkspacesRepository from "../repositories/workspace.repository.js"
@@ -63,13 +64,14 @@ class WorkspaceController {
                     )
                 }
                 else {
-
+                    const channels = await ChannelRepository.getAllByWorkspace(workspace._id)
                     return response.json(
                         {
                             ok: true,
                             message: `Workspace con id ${workspace._id} obtenido`,
                             data: {
-                                workspace: workspace
+                                workspace: workspace,
+                                channels
                             }
                         }
                     )

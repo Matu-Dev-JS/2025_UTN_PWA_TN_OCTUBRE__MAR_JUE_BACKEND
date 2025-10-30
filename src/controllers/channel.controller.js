@@ -1,4 +1,4 @@
-import ChannelRepository from "../repositories/channel.repository";
+import ChannelRepository from "../repositories/channel.repository.js";
 
 class ChannelController {
     static async create(request, response) {
@@ -13,7 +13,7 @@ class ChannelController {
                 });
             }
             const workspaceChannels = await ChannelRepository.getAllByWorkspaceAndName(
-                workspace_id
+                workspace_id, name
             );
 
             if (workspaceChannels.length > 0) {
@@ -48,6 +48,34 @@ class ChannelController {
                 ok: false,
                 status: 500,
                 message: "Error interno del servidor al crear el canal",
+            });
+        }
+    }
+    static async getAllByWorkspace (request, response){
+        try{
+            //Obtener la lista de canales de un espacio de trabajo
+            const {workspace_id} = request.params
+            const channels = await ChannelRepository.getAllByWorkspace(
+                workspace_id
+            );
+
+            return response.json({
+                ok: true, 
+                status:200,
+                message: "Lista de canales obtenida",
+                data: {
+                    channels: channels
+                }
+            })
+
+
+        }
+         catch (error) {
+            console.error("Error al listar channels:", error);
+            return response.status(500).json({
+                ok: false,
+                status: 500,
+                message: "Error interno del servidor al listar los canales",
             });
         }
     }

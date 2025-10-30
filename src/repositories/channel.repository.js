@@ -1,3 +1,4 @@
+import pool from "../config/mysql.config.js";
 import Channels from "../models/Channel.model.js";
 class ChannelRepository {
     /* 
