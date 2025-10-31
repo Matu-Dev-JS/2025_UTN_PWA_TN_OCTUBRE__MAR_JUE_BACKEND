@@ -7,6 +7,17 @@ Capa de abstraccion
 No queremos que nuestro servidor este UNIDO en logica a nuestra DB, porque la DB puede cambiar
 */
 
+export const USERS_TABLE = {
+    NAME: "Users",
+    COLUMNS: {
+        EMAIL:'email',
+        NAME: 'name',
+        PASSWORD: "password",
+        ID: '_id',
+        CREATED_AT: 'created_at'
+    }
+}
+
 class UserRepository {
 
     //Version MYSQL

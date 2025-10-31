@@ -13,6 +13,7 @@ import authMiddleware from "./middleware/auth.middleware.js";
 import MemberWorkspaceRepository from "./repositories/memberWorkspace.repository.js";
 import member_router from "./routes/member.router.js";
 import pool from "./config/mysql.config.js";
+import ChannelMessageRepository from "./repositories/channelMessage.repository.js";
 
 
 
@@ -60,6 +61,7 @@ app.listen(
     }
 )
 
+//ChannelMessageRepository.getAllByChannelId()
 
 
 /* UserRepository.createUser('Test', 'test2@gmail.com', 'pepe123')

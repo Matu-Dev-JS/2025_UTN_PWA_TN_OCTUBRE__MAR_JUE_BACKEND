@@ -8,7 +8,7 @@ import { WORKSPACE_TABLE } from "./workspace.repository.js";
 /* 
 _id	role	user	workspace	created_at	modified_at
 */
-const MEMBER_WORKSPACE_TABLE = {
+export const MEMBER_WORKSPACE_TABLE = {
     NAME: "MembersWorkspace",
     COLUMNS: {
         ID: '_id',
