@@ -12,6 +12,7 @@ import cors from 'cors'
 import authMiddleware from "./middleware/auth.middleware.js";
 import MemberWorkspaceRepository from "./repositories/memberWorkspace.repository.js";
 import member_router from "./routes/member.router.js";
+import pool from "./config/mysql.config.js";
 
 
 
@@ -60,6 +61,7 @@ app.listen(
 )
 
 
+
 /* UserRepository.createUser('Test', 'test2@gmail.com', 'pepe123')
 .then(
     (result) => {
@@ -70,4 +72,4 @@ app.listen(
 //UserRepository.getByEmail('mati.dev.gimenez@gmail.com').then(result => console.log(result))
 //UserRepository.deleteById(4).then(console.log)
 
-MemberWorkspaceRepository.getAllWorkspacesByUserId(1).then(result => console.log(result))
+/* MemberWorkspaceRepository.getAllWorkspacesByUserId(1).then(result => console.log(result)) */
