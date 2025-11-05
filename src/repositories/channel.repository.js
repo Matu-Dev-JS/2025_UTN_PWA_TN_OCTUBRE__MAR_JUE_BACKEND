@@ -41,6 +41,18 @@ class ChannelRepository {
         return channel_found;
     }
 
+    static async getByIdAndWorkspaceId(channel_id, workspace_id) {
+        const query = `
+      SELECT * FROM Channels WHERE _id = ? AND workspace = ?
+    `;
+        const [result] = await pool.execute(query, [channel_id, workspace_id]);
+        const channel_found = result[0];
+        if (!channel_found) {
+            return null;
+        }
+        return channel_found;
+    }
+
     /* 
     Mongoose
     static async create(name, private, workspace_id) {

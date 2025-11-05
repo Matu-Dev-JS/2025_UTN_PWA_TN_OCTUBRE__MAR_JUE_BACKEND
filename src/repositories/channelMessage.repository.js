@@ -8,13 +8,14 @@ export const MESSAGE_TABLE = {
         MEMBER_ID: 'member',
         ID: "_id",
         CHANNEL_ID: "channel",
-        CONTENT: "CONTENT",
+        CONTENT: "content",
         CREATED_AT: 'created_at'
     }
 }
 
 class ChannelMessageRepository {
     static async create(content, channel_id, member_id) {
+        console.log(channel_id)
         const query = `
         INSERT INTO ${MESSAGE_TABLE.NAME}
         (${MESSAGE_TABLE.COLUMNS.CONTENT}, ${MESSAGE_TABLE.COLUMNS.CHANNEL_ID}, ${MESSAGE_TABLE.COLUMNS.MEMBER_ID})
@@ -29,6 +30,7 @@ class ChannelMessageRepository {
     }
 
     static async getAllByChannelId(channel_id) {
+        console.log(channel_id)
         const query = `
             SELECT
                 ${MESSAGE_TABLE.NAME}.${MESSAGE_TABLE.COLUMNS.CONTENT} as message_content,
@@ -38,12 +40,14 @@ class ChannelMessageRepository {
                 ${USERS_TABLE.NAME}.${USERS_TABLE.COLUMNS.ID} as user_id
 
             FROM ${MESSAGE_TABLE.NAME}
-            JOIN ${MEMBER_WORKSPACE_TABLE.NAME} ON ${MESSAGE_TABLE.COLUMNS.MEMBER_ID} = ${MEMBER_WORKSPACE_TABLE.COLUMNS.ID} 
-            JOIN ${USERS_TABLE.NAME} ON ${MEMBER_WORKSPACE_TABLE.COLUMNS.FK_USER} = ${USERS_TABLE.COLUMNS.ID}
+            JOIN ${MEMBER_WORKSPACE_TABLE.NAME} ON ${MESSAGE_TABLE.COLUMNS.MEMBER_ID} = ${MEMBER_WORKSPACE_TABLE.NAME}.${MEMBER_WORKSPACE_TABLE.COLUMNS.ID} 
+            JOIN ${USERS_TABLE.NAME} ON ${MEMBER_WORKSPACE_TABLE.COLUMNS.FK_USER} = ${USERS_TABLE.NAME}.${USERS_TABLE.COLUMNS.ID}
             WHERE ${MESSAGE_TABLE.COLUMNS.CHANNEL_ID} = ?
-            ORDER BY ${MESSAGE_TABLE.CREATED_AT} ASC
+            ORDER BY ${MESSAGE_TABLE.NAME}.${MESSAGE_TABLE.COLUMNS.CREATED_AT} ASC
         `
-        const [result] = pool.execute(query, [channel_id])
+
+        console.log(query)
+        const [result] = await pool.execute(query, [channel_id])
 
         /* 
         Result tendra este formato
